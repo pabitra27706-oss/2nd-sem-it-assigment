@@ -173,7 +173,7 @@ const sampleAnswers = {
     <title>Question 13</title>
 </head>
 <body>
-    <img src="picture.jpg" alt="This is a descriptive alternative text for the image">
+    <img src="picture.jpg" alt="This is a descriptive alternative text for the image" width="100" height="100">
 </body>
 </html>`,
 
