@@ -1,0 +1,454 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Assignment Output</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+
+        /* =====================
+           BASE
+        ===================== */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background: #0f0f1a;
+            min-height: 100vh;
+            padding-bottom: 60px;
+        }
+
+        /* =====================
+           TOP BAR (no print)
+        ===================== */
+        .topbar {
+            background: #1a1a2e;
+            border-bottom: 1px solid #2a2a4a;
+            padding: 14px 30px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .topbar-left {
+            display: flex;
+            align-items: center;
+            gap: 14px;
+        }
+
+        .topbar-logo {
+            font-size: 18px;
+            font-weight: 700;
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .topbar-logo i {
+            -webkit-text-fill-color: #667eea;
+        }
+
+        .topbar-divider {
+            width: 1px;
+            height: 20px;
+            background: #2a2a4a;
+        }
+
+        .topbar-filename {
+            font-size: 13px;
+            color: #888;
+        }
+
+        .topbar-right {
+            display: flex;
+            gap: 10px;
+            align-items: center;
+        }
+
+        .topbar-stat {
+            font-size: 12px;
+            color: #888;
+            background: #0f0f1a;
+            padding: 6px 14px;
+            border-radius: 99px;
+            border: 1px solid #2a2a4a;
+        }
+
+        .topbar-stat span {
+            color: #667eea;
+            font-weight: 600;
+        }
+
+        .btn-back {
+            background: transparent;
+            color: #888;
+            border: 1px solid #2a2a4a;
+            padding: 8px 16px;
+            border-radius: 8px;
+            font-size: 13px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            font-family: 'Inter', sans-serif;
+            transition: all 0.2s;
+            text-decoration: none;
+        }
+
+        .btn-back:hover {
+            border-color: #667eea;
+            color: #667eea;
+        }
+
+        .btn-print {
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: white;
+            border: none;
+            padding: 10px 22px;
+            border-radius: 8px;
+            font-size: 13px;
+            font-weight: 600;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-family: 'Inter', sans-serif;
+            transition: opacity 0.2s;
+        }
+
+        .btn-print:hover {
+            opacity: 0.9;
+        }
+
+        /* =====================
+           PAGE CONTENT
+        ===================== */
+        .output-page {
+            max-width: 860px;
+            margin: 0 auto;
+            padding: 40px 20px;
+            display: flex;
+            flex-direction: column;
+            gap: 32px;
+        }
+
+        /* =====================
+           BROWSER WINDOW CARD
+        ===================== */
+        .browser-window {
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow:
+                0 0 0 1px #2a2a4a,
+                0 20px 60px rgba(0, 0, 0, 0.5);
+            background: white;
+            page-break-inside: avoid;
+            break-inside: avoid;
+        }
+
+        /* Title Bar */
+        .browser-titlebar {
+            background: #e8e8e8;
+            padding: 10px 16px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            border-bottom: 1px solid #d0d0d0;
+            min-height: 40px;
+        }
+
+        /* Three Dots */
+        .browser-dots {
+            display: flex;
+            gap: 7px;
+            flex-shrink: 0;
+        }
+
+        .bdot {
+            width: 13px;
+            height: 13px;
+            border-radius: 50%;
+        }
+
+        .bdot.red    { background: #ff5f56; border: 1px solid #e0443e; }
+        .bdot.yellow { background: #ffbd2e; border: 1px solid #dea123; }
+        .bdot.green  { background: #27c93f; border: 1px solid #1aab29; }
+
+        /* File name in title bar */
+        .browser-title-text {
+            flex: 1;
+            text-align: center;
+            font-size: 12px;
+            font-weight: 600;
+            color: #555;
+            letter-spacing: 0.3px;
+            margin-right: 55px;
+        }
+
+        /* URL Bar Row */
+        .browser-urlbar {
+            background: #f0f0f0;
+            padding: 6px 16px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            border-bottom: 1px solid #d8d8d8;
+        }
+
+        .url-nav-btns {
+            display: flex;
+            gap: 6px;
+            color: #aaa;
+            font-size: 12px;
+        }
+
+        .url-field {
+            flex: 1;
+            background: white;
+            border: 1px solid #d0d0d0;
+            border-radius: 99px;
+            padding: 4px 14px;
+            font-size: 11px;
+            color: #666;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .url-field i {
+            color: #27c93f;
+            font-size: 10px;
+        }
+
+        /* Output Content */
+        .browser-content {
+            background: white;
+            min-height: 80px;
+            padding: 0;
+        }
+
+        .browser-content iframe {
+            width: 100%;
+            border: none;
+            display: block;
+            min-height: 80px;
+        }
+
+        /* Empty State */
+        .browser-empty {
+            padding: 30px;
+            text-align: center;
+            color: #aaa;
+            font-size: 13px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .browser-empty i {
+            font-size: 28px;
+            opacity: 0.4;
+        }
+
+        /* =====================
+           PRINT STYLES
+        ===================== */
+        @media print {
+            body {
+                background: #f5f5f5;
+                padding-bottom: 0;
+            }
+
+            .topbar {
+                display: none !important;
+            }
+
+            .output-page {
+                padding: 20px;
+                gap: 24px;
+                max-width: 100%;
+            }
+
+            .browser-window {
+                box-shadow: 0 2px 12px rgba(0,0,0,0.15);
+                border-radius: 10px;
+                page-break-inside: avoid;
+                break-inside: avoid;
+            }
+
+            .browser-titlebar {
+                background: #e0e0e0;
+            }
+
+            .browser-content iframe {
+                min-height: 60px;
+            }
+        }
+
+        /* =====================
+           RESPONSIVE
+        ===================== */
+        @media (max-width: 600px) {
+            .topbar {
+                padding: 12px 16px;
+                flex-wrap: wrap;
+                gap: 10px;
+            }
+
+            .topbar-stat {
+                display: none;
+            }
+
+            .topbar-filename {
+                display: none;
+            }
+
+            .output-page {
+                padding: 20px 12px;
+                gap: 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- TOP BAR -->
+    <div class="topbar">
+        <div class="topbar-left">
+            <div class="topbar-logo">
+                <i class="fas fa-code"></i>
+                AssignmentEditor
+            </div>
+            <div class="topbar-divider"></div>
+            <div class="topbar-filename" id="topbarFilename">Output</div>
+        </div>
+        <div class="topbar-right">
+            <div class="topbar-stat">
+                Completed: <span id="statCompleted">0</span> / 26
+            </div>
+            <button onclick="window.history.back()" class="btn-back">
+                <i class="fas fa-arrow-left"></i> Back
+            </button>
+            <button onclick="window.print()" class="btn-print">
+                <i class="fas fa-file-pdf"></i> Save as PDF
+            </button>
+        </div>
+    </div>
+
+    <!-- OUTPUT PAGE -->
+    <div class="output-page" id="outputPage"></div>
+
+    <script src="questions.js"></script>
+    <script src="sampleAnswers.js"></script>
+    <script>
+        // Load data
+        const savedData  = JSON.parse(localStorage.getItem('assignmentData')) || {};
+        const fileName   = localStorage.getItem('fileName') || 'HTML_Assignment';
+
+        // Set filename in topbar
+        document.getElementById('topbarFilename').textContent = fileName;
+        document.title = fileName + ' — Output';
+
+        const page = document.getElementById('outputPage');
+        let completedCount = 0;
+
+        questions.forEach(q => {
+            // Use saved code, fallback to sample
+            const code = (savedData[q.id] && savedData[q.id].trim())
+                ? savedData[q.id]
+                : (sampleAnswers[q.id] || '');
+
+            if (code.trim()) completedCount++;
+
+            // Build browser window
+            const win = document.createElement('div');
+            win.className = 'browser-window';
+
+            win.innerHTML = `
+                <!-- Title Bar -->
+                <div class="browser-titlebar">
+                    <div class="browser-dots">
+                        <span class="bdot red"></span>
+                        <span class="bdot yellow"></span>
+                        <span class="bdot green"></span>
+                    </div>
+                    <div class="browser-title-text">${fileName} — Q${q.id}</div>
+                </div>
+
+                <!-- URL Bar -->
+                <div class="browser-urlbar">
+                    <div class="url-nav-btns">
+                        <i class="fas fa-chevron-left"></i>
+                        <i class="fas fa-chevron-right"></i>
+                    </div>
+                    <div class="url-field">
+                        <i class="fas fa-lock"></i>
+                        file:///${fileName.replace(/\s/g,'_')}_Q${q.id}.html
+                    </div>
+                </div>
+
+                <!-- Content -->
+                <div class="browser-content" id="content-${q.id}">
+                    ${code.trim()
+                        ? `<iframe 
+                                srcdoc=""
+                                id="frame-${q.id}"
+                                scrolling="no"
+                                onload="resizeFrame(this)">
+                           </iframe>`
+                        : `<div class="browser-empty">
+                               <i class="fas fa-code"></i>
+                               No code written for this question
+                           </div>`
+                    }
+                </div>
+            `;
+
+            page.appendChild(win);
+
+            // Inject code into iframe after appending
+            if (code.trim()) {
+                const frame = document.getElementById(`frame-${q.id}`);
+                if (frame) {
+                    frame.srcdoc = code;
+                }
+            }
+        });
+
+        // Update stat
+        document.getElementById('statCompleted').textContent = completedCount;
+
+        // Auto resize iframes to fit content
+        function resizeFrame(iframe) {
+            try {
+                const doc = iframe.contentDocument || iframe.contentWindow.document;
+                const height = doc.documentElement.scrollHeight ||
+                               doc.body.scrollHeight;
+                iframe.style.height = (height + 20) + 'px';
+            } catch(e) {
+                iframe.style.height = '100px';
+            }
+        }
+
+        // Re-run resize after all content loads
+        window.addEventListener('load', () => {
+            document.querySelectorAll('iframe').forEach(f => {
+                resizeFrame(f);
+            });
+        });
+    </script>
+</body>
+</html>
